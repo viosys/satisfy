@@ -41,13 +41,15 @@ class SatisBuildRunner
     }
 
     /**
+     * @param string|null $repositoryId
      * @return \Generator|string[]
      */
-    public function run(): \Generator
+    public function run(?string $repositoryId = null): \Generator
     {
+        $repository = $repositoryId ? $this->manager->findOneRepository($repositoryId) : null;
         $this->lock->acquire(true);
         try {
-            $process = $this->processFactory->create($this->getCommandLine(), $this->timeout);
+            $process = $this->processFactory->create($this->getCommandLine($repository ? $repository->getUrl() : null), $this->timeout);
             $process->start();
 
             yield $process->getCommandLine();

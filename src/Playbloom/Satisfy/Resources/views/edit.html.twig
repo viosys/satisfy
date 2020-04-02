@@ -13,6 +13,7 @@
         {% include 'PlaybloomSatisfyBundle::_form.html.twig' %}
 
         <button class="btn btn-large btn-block btn-primary" type="submit">Update</button>
+        <a href="{{ path('satis_build_repository', { 'repositoryId': repository.id }) }}" class="btn btn-large btn-block btn-default    " >Build</a>
         <a href="{{ path('repository_delete', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>
     {{ form_end(form) }}
 {% endblock %}

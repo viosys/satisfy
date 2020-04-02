@@ -10,7 +10,11 @@
     <script type="text/javascript">
     $(function(){
         var output = $("#satisOutput");
-        var outputSource = new EventSource("{{ path('satis_build_run') }}");
+        {% if repositoryId %}
+            var outputSource = new EventSource("{{ path('satis_build_repository_run', {'repositoryId': repositoryId }) }}");
+        {% else %}
+            var outputSource = new EventSource("{{ path('satis_build_run') }}");
+        {% endif %}
         outputSource.onmessage = function(event){
             if (event.data == '__done__') {
                 outputSource.close();
